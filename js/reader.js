@@ -31,4 +31,5 @@ function clearNotes() {
 const backButton = document.getElementById("backBtn");
 backButton.textContent = back;
 
+loadNotes();
 setInterval(loadNotes, 2000);
