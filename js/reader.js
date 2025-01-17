@@ -1,3 +1,5 @@
+// ChatGPT disclosure of use: used for styling, structure and syntax
+
 // Import language messages
 import { updated, back } from "../lang/messages/en/user.js";
 

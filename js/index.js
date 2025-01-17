@@ -1,3 +1,5 @@
+// ChatGPT disclosure of use: used for styling, structure and syntax
+
 import { appTitle, read, write } from "../lang/messages/en/user.js"
 
 const title = document.getElementById("topTitle");
