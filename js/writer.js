@@ -25,6 +25,8 @@ function createRemoveButton() {
 function saveNotes() {
   const notes = Array.from(content.children).map((note) => note.children[0].value);
   localStorage.setItem("notes", JSON.stringify(notes));
+  localStorage.setItem("storeTime", new Date());
+  displayStoreTime();
 }
 
 function loadNotes() {
@@ -34,6 +36,10 @@ function loadNotes() {
     noteElement.children[0].value = note;
     content.appendChild(noteElement);
   });
+}
+
+function displayStoreTime() {
+  document.getElementById("storeTime").innerHTML = new Date(localStorage.getItem("storeTime"));
 }
 
 loadNotes();

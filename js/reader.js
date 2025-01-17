@@ -16,4 +16,9 @@ function loadNotes() {
   });
 }
 
+function displayStoreTime() {
+  document.getElementById("updateTime").innerHTML = new Date(localStorage.getItem("storeTime"));
+}
+
+displayStoreTime();
 loadNotes();
