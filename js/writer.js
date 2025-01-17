@@ -1,3 +1,5 @@
+import { stored, add, back } from "../lang/messages/en/user.js"
+
 const content = document.getElementById("content");
 
 function addNote() {
@@ -30,6 +32,7 @@ function saveNotes() {
 }
 
 function loadNotes() {
+  displayStoreTime();
   const notes = JSON.parse(localStorage.getItem("notes"));
   notes.forEach((note) => {
     const noteElement = createNoteElement();
@@ -39,8 +42,14 @@ function loadNotes() {
 }
 
 function displayStoreTime() {
-  document.getElementById("storeTime").innerHTML = new Date(localStorage.getItem("storeTime"));
+  document.getElementById("storeTime").innerHTML = stored +  new Date(localStorage.getItem("storeTime"));
 }
+
+const backButton = document.getElementById("backBtn");
+backButton.textContent = back;
+
+const addButton = document.getElementById("addBtn");
+addButton.textContent = add;
 
 loadNotes();
 
