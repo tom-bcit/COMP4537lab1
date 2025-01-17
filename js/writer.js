@@ -1,59 +1,116 @@
-import { stored, add, back } from "../lang/messages/en/user.js"
+// Import language messages
+import { stored, add, back } from "../lang/messages/en/user.js";
 
-const content = document.getElementById("content");
-
-function addNote() {
-  content.appendChild(createNoteElement());
-}
-
-function createNoteElement() {
-  const note = document.createElement("div");
-  note.className = "note";
-  note.appendChild(document.createElement("textarea"));
-  note.appendChild(createRemoveButton());
-  return note;
-}
-
-function createRemoveButton() {
-  const button = document.createElement("button");
-  button.className = "remove";
-  button.textContent = "Remove";
-  button.onclick = () => {
-    button.parentElement.remove();
-    saveNotes();
-  };
-  return button;
-}
-
-function saveNotes() {
-  const notes = Array.from(content.children).map((note) => note.children[0].value);
-  localStorage.setItem("notes", JSON.stringify(notes));
-  displayStoreTime();
-}
-
-function loadNotes() {
-  displayStoreTime();
-  const notes = JSON.parse(localStorage.getItem("notes"));
-  if (!notes) {
-    return;
+// Note class to handle individual note creation and behavior
+class Note {
+  constructor(content = "") {
+    this.content = content;
+    this.element = this.createElement();
   }
-  notes.forEach((note) => {
-    const noteElement = createNoteElement();
-    noteElement.children[0].value = note;
-    content.appendChild(noteElement);
-  });
+
+  createElement() {
+    const noteDiv = document.createElement("div");
+    noteDiv.className = "note";
+
+    // Create and append the textarea
+    const textArea = document.createElement("textarea");
+    textArea.value = this.content;
+    noteDiv.appendChild(textArea);
+
+    // Create and append the remove button
+    const removeButton = document.createElement("button");
+    removeButton.className = "remove";
+    removeButton.textContent = "Remove";
+    removeButton.onclick = () => {
+      this.remove(noteDiv);
+    };
+    noteDiv.appendChild(removeButton);
+
+    return noteDiv;
+  }
+
+  remove(noteElement) {
+    noteElement.remove();
+    NoteApp.getInstance().saveNotes(); // Trigger save on removal
+  }
+
+  getContent() {
+    return this.element.querySelector("textarea").value;
+  }
 }
 
-function displayStoreTime() {
-  document.getElementById("storeTime").innerHTML = stored +  new Date();
+// LocalStorageManager class for handling LocalStorage operations
+class LocalStorageManager {
+  static save(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  static load(key) {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  }
 }
 
-const backButton = document.getElementById("backBtn");
-backButton.textContent = back;
+// NoteApp class to manage the entire application
+class NoteApp {
+  constructor() {
+    if (NoteApp.instance) {
+      return NoteApp.instance; // Singleton pattern
+    }
+    this.notesKey = "notes";
+    this.content = document.getElementById("content");
+    this.init();
+    NoteApp.instance = this;
+  }
 
-const addButton = document.getElementById("addBtn");
-addButton.textContent = add;
+  static getInstance() {
+    return NoteApp.instance || new NoteApp();
+  }
 
-loadNotes();
+  init() {
+    // Set up buttons
+    const backButton = document.getElementById("backBtn");
+    backButton.textContent = back;
 
-setInterval(saveNotes, 2000);
+    const addButton = document.getElementById("addBtn");
+    addButton.textContent = add;
+    addButton.onclick = () => this.addNote();
+
+    // Load existing notes
+    this.loadNotes();
+
+    // Auto-save notes periodically
+    setInterval(() => this.saveNotes(), 2000);
+  }
+
+  addNote() {
+    const note = new Note();
+    this.content.appendChild(note.element);
+  }
+
+  saveNotes() {
+    const notes = Array.from(this.content.children).map((noteElement) =>
+      noteElement.querySelector("textarea").value
+    );
+    LocalStorageManager.save(this.notesKey, notes);
+    this.displayStoreTime();
+  }
+
+  loadNotes() {
+    const notes = LocalStorageManager.load(this.notesKey);
+    if (notes) {
+      notes.forEach((content) => {
+        const note = new Note(content);
+        this.content.appendChild(note.element);
+      });
+    }
+    this.displayStoreTime();
+  }
+
+  displayStoreTime() {
+    document.getElementById("storeTime").innerHTML = stored + new Date();
+  }
+}
+
+// Initialize the NoteApp
+new NoteApp();
