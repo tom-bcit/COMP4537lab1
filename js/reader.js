@@ -5,7 +5,9 @@ const content = document.getElementById("content");
 function createNoteElement() {
   const note = document.createElement("div");
   note.className = "note";
-  note.appendChild(document.createElement("textarea"));
+  const textarea = document.createElement("textarea");
+  textarea.disabled = true;
+  note.appendChild(textarea);
   return note;
 }
 
