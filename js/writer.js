@@ -16,6 +16,7 @@ function createNoteElement() {
 
 function createRemoveButton() {
   const button = document.createElement("button");
+  button.className = "remove";
   button.textContent = "Remove";
   button.onclick = () => {
     button.parentElement.remove();

@@ -1,0 +1,41 @@
+textarea {
+  background-color: cornflowerblue;
+  color: white;
+  width: 50%;
+  min-width: 200px;
+  max-width: 500px;
+  height: 15%; 
+  min-height: 100px;
+  max-height: 300px;
+  padding: 15px; 
+  font-size: 16px; 
+  resize: none;
+  margin: 10px;
+}
+
+.note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 5px;
+  margin: 15px;
+}
+
+#addBtn {
+  background-color:forestgreen;
+  color: white;
+  justify-self: center;
+}
+
+#backBtn {
+  background-color:darkred;
+  color: white;
+}
+
+.remove {
+  background-color:chocolate;
+  color: white;
+}
