@@ -1,3 +1,5 @@
+import { updated, back } from "../lang/messages/en/user.js"
+
 const content = document.getElementById("content");
 
 function createNoteElement() {
@@ -17,8 +19,11 @@ function loadNotes() {
 }
 
 function displayStoreTime() {
-  document.getElementById("updateTime").innerHTML = new Date(localStorage.getItem("storeTime"));
+  document.getElementById("updateTime").innerHTML = updated + new Date(localStorage.getItem("storeTime"));
 }
+
+const backButton = document.getElementById("backBtn");
+backButton.textContent = back;
 
 displayStoreTime();
 loadNotes();
