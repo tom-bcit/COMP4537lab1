@@ -28,7 +28,6 @@ function createRemoveButton() {
 function saveNotes() {
   const notes = Array.from(content.children).map((note) => note.children[0].value);
   localStorage.setItem("notes", JSON.stringify(notes));
-  localStorage.setItem("storeTime", new Date());
   displayStoreTime();
 }
 
@@ -43,7 +42,7 @@ function loadNotes() {
 }
 
 function displayStoreTime() {
-  document.getElementById("storeTime").innerHTML = stored +  new Date(localStorage.getItem("storeTime"));
+  document.getElementById("storeTime").innerHTML = stored +  new Date();
 }
 
 const backButton = document.getElementById("backBtn");

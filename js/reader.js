@@ -23,7 +23,7 @@ function loadNotes() {
 }
 
 function displayStoreTime() {
-  document.getElementById("updateTime").innerHTML = updated + new Date(localStorage.getItem("storeTime"));
+  document.getElementById("updateTime").innerHTML = updated + new Date();
 }
 
 function clearNotes() {
