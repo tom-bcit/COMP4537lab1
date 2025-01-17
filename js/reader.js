@@ -15,6 +15,9 @@ function loadNotes() {
   displayStoreTime();
   clearNotes();
   const notes = JSON.parse(localStorage.getItem("notes"));
+  if (!notes) {
+    return;
+  }
   notes.forEach((note) => {
     const noteElement = createNoteElement();
     noteElement.children[0].value = note;
