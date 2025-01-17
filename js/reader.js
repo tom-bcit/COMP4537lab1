@@ -5,10 +5,10 @@ import { updated, back } from "../lang/messages/en/user.js";
 class Note {
   constructor(content = "") {
     this.content = content;
-    this.element = this.createElement();
+    this.element = this.createNoteDiv();
   }
 
-  createElement() {
+  createNoteDiv() {
     const noteDiv = document.createElement("div");
     noteDiv.className = "note";
 
@@ -19,10 +19,6 @@ class Note {
     noteDiv.appendChild(textArea);
 
     return noteDiv;
-  }
-
-  getContent() {
-    return this.element.querySelector("textarea").value;
   }
 }
 
@@ -44,10 +40,6 @@ class NoteApp {
     this.content = document.getElementById("content");
     this.init();
     NoteApp.instance = this;
-  }
-
-  static getInstance() {
-    return NoteApp.instance || new NoteApp();
   }
 
   init() {

@@ -5,10 +5,10 @@ import { stored, add, back } from "../lang/messages/en/user.js";
 class Note {
   constructor(content = "") {
     this.content = content;
-    this.element = this.createElement();
+    this.element = this.createNoteDiv();
   }
 
-  createElement() {
+  createNoteDiv() {
     const noteDiv = document.createElement("div");
     noteDiv.className = "note";
 
@@ -32,10 +32,6 @@ class Note {
   remove(noteElement) {
     noteElement.remove();
     NoteApp.getInstance().saveNotes(); // Trigger save on removal
-  }
-
-  getContent() {
-    return this.element.querySelector("textarea").value;
   }
 }
 
