@@ -10,6 +10,8 @@ function createNoteElement() {
 }
 
 function loadNotes() {
+  displayStoreTime();
+  clearNotes();
   const notes = JSON.parse(localStorage.getItem("notes"));
   notes.forEach((note) => {
     const noteElement = createNoteElement();
@@ -22,8 +24,11 @@ function displayStoreTime() {
   document.getElementById("updateTime").innerHTML = updated + new Date(localStorage.getItem("storeTime"));
 }
 
+function clearNotes() {
+  content.innerHTML = "";
+}
+
 const backButton = document.getElementById("backBtn");
 backButton.textContent = back;
 
-displayStoreTime();
-loadNotes();
+setInterval(loadNotes, 2000);
